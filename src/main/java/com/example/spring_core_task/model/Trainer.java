@@ -13,4 +13,16 @@ public class Trainer extends User {
     }
     public Trainer() {
     }
+
+    public void toStrig() {
+        System.out.println("Trainer{" +
+                "id=" + id +
+                ", specialization=" + specialization +
+                ", firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", isActive='" + isActive() + '\'' +
+                ", userName='" + getUserName() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                '}');
+    }
 }
