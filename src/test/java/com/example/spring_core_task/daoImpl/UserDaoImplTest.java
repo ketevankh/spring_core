@@ -1,6 +1,7 @@
 package com.example.spring_core_task.daoImpl;
 
 import com.example.spring_core_task.dao.UserDao;
+import com.example.spring_core_task.dao.impl.UserDaoImpl;
 import com.example.spring_core_task.model.Trainee;
 import com.example.spring_core_task.model.Trainer;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +32,7 @@ public class UserDaoImplTest {
 
     @Test
     public void testGetAllUserNames_Empty() {
-        assertEquals(Optional.empty(), userDao.getAllUserNames());
+        assertEquals(Collections.emptySet(), userDao.getAllUserNames());
     }
 
     @Test
@@ -47,7 +48,7 @@ public class UserDaoImplTest {
         expectedUserNames.add("user1");
         expectedUserNames.add("user2");
 
-        assertEquals(Optional.of(expectedUserNames), userDao.getAllUserNames());
+        assertEquals(expectedUserNames, userDao.getAllUserNames());
     }
 
     @Test

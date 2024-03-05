@@ -7,6 +7,6 @@ import java.util.Optional;
 public interface TrainingDao {
     Optional<Long> create(Training training);
     Optional<Training> getById(Long id);
-    Optional<List<Training>> getAllTraining();
+    List<Training> getAllTraining();
 }
 

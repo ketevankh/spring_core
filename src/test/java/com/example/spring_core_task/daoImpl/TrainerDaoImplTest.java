@@ -1,5 +1,6 @@
 package com.example.spring_core_task.daoImpl;
 
+import com.example.spring_core_task.dao.impl.TrainerDaoImpl;
 import com.example.spring_core_task.model.Trainee;
 import com.example.spring_core_task.model.Trainer;
 import com.example.spring_core_task.model.TrainingType;
@@ -43,13 +44,17 @@ public class TrainerDaoImplTest {
 
     @Test
     public void testCreate() {
+        Assertions.assertTrue(trainerDao.trainerStorage.isEmpty());
+
         Optional<Long> id = trainerDao.create(trainer);
         Assertions.assertTrue(id.isPresent());
         Assertions.assertEquals(1L, id.get());
         Assertions.assertEquals(1, trainerDao.trainerStorage.size());
 
-        Optional<Long> emptyTrainer = trainerDao.create(updatedTrainer);
-        Assertions.assertFalse(emptyTrainer.isPresent());
+        Optional<Long> existedTrainer = trainerDao.create(updatedTrainer);
+        Assertions.assertTrue(existedTrainer.isPresent());
+        Assertions.assertEquals(1L, existedTrainer.get());
+        Assertions.assertEquals(1, trainerDao.trainerStorage.size());
     }
 
     @Test

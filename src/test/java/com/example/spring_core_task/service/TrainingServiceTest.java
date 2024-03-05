@@ -59,11 +59,11 @@ class TrainingServiceTest {
         trainingList.add(new Training());
         trainingList.add(new Training());
 
-        when(trainingDao.getAllTraining()).thenReturn(Optional.of(trainingList));
+        when(trainingDao.getAllTraining()).thenReturn(List.copyOf(trainingList));
 
-        Optional<List<Training>> result = trainingService.getAllTraining();
+        List<Training> result = trainingService.getAllTraining();
 
-        assertEquals(Optional.of(trainingList), result);
+        assertEquals(trainingList, result);
         verify(trainingDao, times(1)).getAllTraining();
     }
 }

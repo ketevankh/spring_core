@@ -1,6 +1,8 @@
 package com.example.spring_core_task.daoImpl;
 
+import com.example.spring_core_task.dao.impl.TrainingDaoImpl;
 import com.example.spring_core_task.model.Training;
+import com.example.spring_core_task.model.TrainingType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,14 +23,25 @@ public class TrainingDaoImplTest {
 
     @Test
     public void testCreateTraining() {
+        Assertions.assertTrue(trainingDao.trainingStorage.isEmpty());
+
         Training training = new Training();
         training.setId(1L);
-        training.setTrainingName("CARDIO");
+        training.setTrainingName("training1");
+        training.setTrainingType(TrainingType.CARDIO);
         Optional<Long> id = trainingDao.create(training);
         Assertions.assertTrue(id.isPresent());
+        Assertions.assertEquals(1L, id.get());
+        Assertions.assertEquals("training1", trainingDao.trainingStorage.get(1L).getTrainingName());
+        Assertions.assertEquals(TrainingType.CARDIO, trainingDao.trainingStorage.get(1L).getTrainingType());
+        Assertions.assertEquals(1, trainingDao.trainingStorage.size());
 
-        Optional<Long> emptyTraining = trainingDao.create(training);
-        Assertions.assertFalse(emptyTraining.isPresent());
+
+        Optional<Long> existedTraining = trainingDao.create(training);
+        Assertions.assertTrue(existedTraining.isPresent());
+        Assertions.assertEquals(1L, existedTraining.get());
+        Assertions.assertEquals(TrainingType.CARDIO, trainingDao.trainingStorage.get(1L).getTrainingType());
+        Assertions.assertEquals(1, trainingDao.trainingStorage.size());
     }
 
     @Test
@@ -47,7 +60,7 @@ public class TrainingDaoImplTest {
 
     @Test
     public void testGetAllTraining() {
-        Assertions.assertFalse(trainingDao.getAllTraining().isPresent());
+        Assertions.assertTrue(trainingDao.getAllTraining().isEmpty());
         Training training1 = new Training();
         training1.setId(1L);
         training1.setTrainingName("BALANCE");
@@ -56,12 +69,10 @@ public class TrainingDaoImplTest {
         training2.setTrainingName("STRENGTH");
         trainingDao.create(training1);
         trainingDao.create(training2);
-        Optional<List<Training>> allTraining = trainingDao.getAllTraining();
-        Assertions.assertTrue(allTraining.isPresent());
-        List<Training> trainingList = allTraining.get();
-        Assertions.assertEquals(2, trainingList.size());
-        Assertions.assertTrue(trainingList.contains(training1));
-        Assertions.assertTrue(trainingList.contains(training2));
+        List<Training> allTraining = trainingDao.getAllTraining();
+        Assertions.assertFalse(allTraining.isEmpty());
+        Assertions.assertEquals(2, allTraining.size());
+        Assertions.assertTrue(allTraining.contains(training1));
+        Assertions.assertTrue(allTraining.contains(training2));
     }
-
 }

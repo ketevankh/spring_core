@@ -25,7 +25,7 @@ public class TrainingService {
         return trainingDao.getById(id);
     }
 
-    public Optional<List<Training>> getAllTraining() {
+    public List<Training> getAllTraining() {
         return trainingDao.getAllTraining();
     }
 

@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Repository
 public interface UserDao {
-    Optional<Set<String>> getAllUserNames();
+    Set<String> getAllUserNames();
 
     boolean isUniqUserName(String userName);
 

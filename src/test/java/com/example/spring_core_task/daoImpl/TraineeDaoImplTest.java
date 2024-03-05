@@ -1,6 +1,7 @@
 package com.example.spring_core_task.daoImpl;
 
 
+import com.example.spring_core_task.dao.impl.TraineeDaoImpl;
 import com.example.spring_core_task.model.Trainee;
 import com.example.spring_core_task.model.Trainer;
 import org.junit.jupiter.api.Assertions;
@@ -23,6 +24,8 @@ public class TraineeDaoImplTest {
 
     @Test
     public void testCreateTrainee() {
+        Assertions.assertTrue(traineeDao.traineeStorage.isEmpty());
+
         Trainee trainee = new Trainee();
         trainee.setId(1L);
         trainee.setFirstName("John");
@@ -32,8 +35,10 @@ public class TraineeDaoImplTest {
         Assertions.assertEquals(1L, id.get());
         Assertions.assertEquals(1, traineeDao.traineeStorage.size());
 
-        Optional<Long> emptyTrainee = traineeDao.create(trainee);
-        Assertions.assertFalse(emptyTrainee.isPresent());
+        Optional<Long> existedTrainee = traineeDao.create(trainee);
+        Assertions.assertTrue(existedTrainee.isPresent());
+        Assertions.assertEquals(1L, existedTrainee.get());
+        Assertions.assertEquals(1, traineeDao.traineeStorage.size());
     }
 
     @Test

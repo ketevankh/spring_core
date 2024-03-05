@@ -1,10 +1,11 @@
-package com.example.spring_core_task.daoImpl;
+package com.example.spring_core_task.dao.impl;
 
 import com.example.spring_core_task.dao.TrainingDao;
 import com.example.spring_core_task.model.Training;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @Repository
 @Slf4j
 public class TrainingDaoImpl implements TrainingDao {
-    private final Map<Long, Training> trainingStorage;
+    public final Map<Long, Training> trainingStorage;
 
     public TrainingDaoImpl(Map<Long, Training> trainingStorage) {
         this.trainingStorage = trainingStorage;
@@ -22,7 +23,7 @@ public class TrainingDaoImpl implements TrainingDao {
     public Optional<Long> create(Training training) {
         if(trainingStorage.containsKey(training.getId())) {
             log.info("Training already exists");
-            return Optional.empty();
+            return Optional.of(trainingStorage.get(training.getId()).getId());
         }
         trainingStorage.put(training.getId(), training);
         return Optional.of(training.getId());
@@ -38,11 +39,11 @@ public class TrainingDaoImpl implements TrainingDao {
     }
 
     @Override
-    public Optional<List<Training>> getAllTraining() {
+    public List<Training> getAllTraining() {
         if(trainingStorage.isEmpty()) {
             log.info("No training exists");
-            return Optional.empty();
+            return Collections.emptyList();
         }
-        return Optional.of(List.copyOf(trainingStorage.values()));
+        return List.copyOf(trainingStorage.values());
     }
 }

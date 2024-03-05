@@ -1,7 +1,6 @@
-package com.example.spring_core_task.daoImpl;
+package com.example.spring_core_task.dao.impl;
 
 import com.example.spring_core_task.dao.TraineeDao;
-import com.example.spring_core_task.daoImpl.UserDaoImpl;
 import com.example.spring_core_task.model.Trainee;
 import com.example.spring_core_task.model.Trainer;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +21,7 @@ public class TraineeDaoImpl extends UserDaoImpl implements TraineeDao {
     public Optional<Long> create(Trainee trainee) {
         if(traineeStorage.containsKey(trainee.getId())) {
             log.info("Trainee already exists");
-            return Optional.empty();
+            return Optional.of(traineeStorage.get(trainee.getId()).getId());
         }
         trainee.setPassword(generatePassword());
         trainee.setUserName(generateUserName(trainee.getFirstName(), trainee.getLastName()));

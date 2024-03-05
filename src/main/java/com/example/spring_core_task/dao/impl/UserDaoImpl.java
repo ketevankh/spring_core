@@ -1,4 +1,4 @@
-package com.example.spring_core_task.daoImpl;
+package com.example.spring_core_task.dao.impl;
 
 
 import com.example.spring_core_task.dao.UserDao;
@@ -13,21 +13,21 @@ import java.util.*;
 @AllArgsConstructor
 public class UserDaoImpl implements UserDao {
 
-    protected final Map<Long, Trainee> traineeStorage;
-    protected final Map<Long, Trainer> trainerStorage;
+    public final Map<Long, Trainee> traineeStorage;
+    public final Map<Long, Trainer> trainerStorage;
     protected static final int PASSWORD_LENGTH = 10;
 
     @Override
-    public Optional<Set<String>> getAllUserNames() {
+    public Set<String> getAllUserNames() {
         Set<String> userNames = new HashSet<>();
         traineeStorage.forEach((k, v) -> userNames.add(v.getUserName()));
         trainerStorage.forEach((k, v) -> userNames.add(v.getUserName()));
-        return userNames.isEmpty() ? Optional.empty() : Optional.of(userNames);
+        return userNames.isEmpty() ? Collections.emptySet() : userNames;
     }
 
     @Override
     public boolean isUniqUserName(String userName) {
-        return !(getAllUserNames().isPresent()) || !getAllUserNames().get().contains(userName);
+        return getAllUserNames().isEmpty() || !getAllUserNames().contains(userName);
     }
 
     @Override
